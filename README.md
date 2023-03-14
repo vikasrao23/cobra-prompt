@@ -16,7 +16,7 @@ Cobra-prompt makes every Cobra command and flag available for go-prompt.
 Get the module:
 
 ```
-go get github.com/stromland/cobra-prompt
+go get github.com/tengteng/cobra-prompt
 ```
 
 ## Explore the example

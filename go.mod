@@ -1,4 +1,4 @@
-module github.com/stromland/cobra-prompt
+module github.com/tengteng/cobra-prompt
 
 go 1.17
 

@@ -12,7 +12,7 @@ require (
 	github.com/stretchr/testify v1.7.0
 )
 
-require github.com/tengteng/go-prompt v0.0.0-20230314012424-9cc85a0167f2
+require github.com/tengteng/go-prompt v1.0.1
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect

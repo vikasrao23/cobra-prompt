@@ -5,9 +5,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/c-bata/go-prompt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
+	"github.com/tengteng/go-prompt"
 )
 
 // DynamicSuggestionsAnnotation for dynamic suggestions.
@@ -23,7 +23,7 @@ type CobraPrompt struct {
 	RootCmd *cobra.Command
 
 	// GoPromptOptions is for customize go-prompt
-	// see https://github.com/c-bata/go-prompt/blob/master/option.go
+	// see https://github.com/tengteng/go-prompt/blob/master/option.go
 	GoPromptOptions []prompt.Option
 
 	// DynamicSuggestionsFunc will be executed if an command has CallbackAnnotation as an annotation. If it's included

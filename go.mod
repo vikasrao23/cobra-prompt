@@ -3,7 +3,6 @@ module github.com/tengteng/cobra-prompt
 go 1.17
 
 require (
-	github.com/c-bata/go-prompt v0.2.6
 	github.com/mattn/go-colorable v0.1.11 // indirect
 	github.com/mattn/go-runewidth v0.0.13 // indirect
 	github.com/mattn/go-tty v0.0.3 // indirect
@@ -12,6 +11,8 @@ require (
 	github.com/spf13/pflag v1.0.5
 	github.com/stretchr/testify v1.7.0
 )
+
+require github.com/tengteng/go-prompt v0.0.0-20230314012424-9cc85a0167f2
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect

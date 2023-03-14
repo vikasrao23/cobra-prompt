@@ -3,9 +3,9 @@ package cobraprompt
 import (
 	"testing"
 
-	"github.com/c-bata/go-prompt"
 	"github.com/spf13/cobra"
 	"github.com/stretchr/testify/assert"
+	"github.com/tengteng/go-prompt"
 )
 
 func newTestCommand(use string, short string) *cobra.Command {

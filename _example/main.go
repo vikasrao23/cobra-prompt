@@ -4,9 +4,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/c-bata/go-prompt"
 	cobraprompt "github.com/tengteng/cobra-prompt"
 	"github.com/tengteng/cobra-prompt/_example/cmd"
+	"github.com/tengteng/go-prompt"
 )
 
 var advancedPrompt = &cobraprompt.CobraPrompt{

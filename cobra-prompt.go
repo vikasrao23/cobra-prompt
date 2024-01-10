@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -96,13 +97,29 @@ func (co CobraPrompt) RunContext(ctx context.Context) {
 	p.Run()
 }
 
+func parseArgsWithQuotes(input string) []string {
+	re := regexp.MustCompile(`"[^"]+"|\S+`)
+	matches := re.FindAllString(input, -1)
+
+	var args []string
+	for _, match := range matches {
+		// Remove surrounding double quotes if present
+		if strings.HasPrefix(match, `"`) && strings.HasSuffix(match, `"`) {
+			match = match[1 : len(match)-1]
+		}
+		args = append(args, match)
+	}
+
+	return args
+}
+
 func (co CobraPrompt) parseArgs(in string) []string {
 	fmt.Printf("in: %s\n", in)
 	if co.InArgsParser != nil {
 		return co.InArgsParser(in)
 	}
 
-	return strings.Fields(in)
+	return parseArgsWithQuotes(in)
 }
 
 func (co CobraPrompt) prepare() {

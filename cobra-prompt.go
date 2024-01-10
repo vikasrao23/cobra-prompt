@@ -76,7 +76,7 @@ func (co CobraPrompt) RunContext(ctx context.Context) {
 	p := prompt.New(
 		func(in string) {
 			promptArgs := co.parseArgs(in)
-			fmt.Printf("promptArgs: %v\n", promptArgs)
+			fmt.Printf("promptArgs: %v %d\n", promptArgs, len(promptArgs))
 			os.Args = append([]string{os.Args[0]}, promptArgs...)
 			if err := co.RootCmd.ExecuteContext(ctx); err != nil {
 				if co.OnErrorFunc != nil {

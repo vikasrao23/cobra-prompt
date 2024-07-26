@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	cobraprompt "github.com/tengteng/cobra-prompt"
-	"github.com/tengteng/go-prompt"
+	cobraprompt "github.com/vikasrao23/cobra-prompt"
+	"github.com/vikasrao23/go-prompt"
 )
 
 var getFoodDynamicAnnotationValue = "GetFood"

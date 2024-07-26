@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/stretchr/testify/assert"
-	"github.com/tengteng/go-prompt"
+	"github.com/vikasrao23/go-prompt"
 )
 
 func newTestCommand(use string, short string) *cobra.Command {

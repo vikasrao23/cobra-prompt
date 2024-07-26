@@ -3,13 +3,21 @@ package cobraprompt
 import (
 	"context"
 	"os"
+	"os/signal"
 	"regexp"
 	"strings"
+	"syscall"
 
+	"github.com/pkg/term/termios"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
-	"github.com/tengteng/go-prompt"
+	"github.com/vikasrao23/go-prompt"
+	"golang.org/x/sys/unix"
 )
+
+var fd int
+
+var originalTermios *unix.Termios
 
 // DynamicSuggestionsAnnotation for dynamic suggestions.
 const DynamicSuggestionsAnnotation = "cobra-prompt-dynamic-suggestions"
@@ -72,26 +80,56 @@ func (co CobraPrompt) RunContext(ctx context.Context) {
 	}
 
 	co.prepare()
+	var err error
+	fd, err = syscall.Open("/dev/tty", syscall.O_RDONLY, 0)
+	if err != nil {
+		panic(err)
+	}
+	// get the original settings
+	originalTermios, err = termios.Tcgetattr(uintptr(fd))
+	if err != nil {
+		panic(err)
+	}
 
 	p := prompt.New(
-		func(in string) {
-			promptArgs := co.parseArgs(in)
-			os.Args = append([]string{os.Args[0]}, promptArgs...)
-			if err := co.RootCmd.ExecuteContext(ctx); err != nil {
-				if co.OnErrorFunc != nil {
-					co.OnErrorFunc(err)
-				} else {
-					co.RootCmd.PrintErrln(err)
-					os.Exit(1)
-				}
+		func(input string) {
+			if err := termios.Tcsetattr(uintptr(fd), termios.TCSANOW, (*unix.Termios)(originalTermios)); err != nil {
+				panic(err)
 			}
+			ctx, cancel := context.WithCancel(context.Background())
+			c := make(chan os.Signal, 1)
+			signal.Notify(c, os.Interrupt)
+
+			go func() {
+				select {
+				case <-c:
+					cancel()
+				}
+			}()
+			go func() {
+				defer cancel()
+				promptArgs := co.parseArgs(input)
+				os.Args = append([]string{os.Args[0]}, promptArgs...)
+				if err := co.RootCmd.ExecuteContext(ctx); err != nil {
+					if co.OnErrorFunc != nil {
+						co.OnErrorFunc(err)
+					} else {
+						co.RootCmd.PrintErrln(err)
+						os.Exit(1)
+					}
+				}
+			}()
+			select {
+			case <-ctx.Done():
+				return
+			}
+
 		},
 		func(d prompt.Document) []prompt.Suggest {
 			return findSuggestions(&co, &d)
 		},
 		co.GoPromptOptions...,
 	)
-
 	p.Run()
 }
 

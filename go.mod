@@ -1,4 +1,4 @@
-module github.com/tengteng/cobra-prompt
+module github.com/vikasrao23/cobra-prompt
 
 go 1.19
 
@@ -12,7 +12,10 @@ require (
 	github.com/stretchr/testify v1.7.0
 )
 
-require github.com/tengteng/go-prompt v1.0.2
+require (
+	github.com/tengteng/go-prompt v1.0.3
+	github.com/vikasrao23/go-prompt v0.0.0-20240726210605-328f04df3547
+)
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect

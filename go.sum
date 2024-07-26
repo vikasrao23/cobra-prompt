@@ -32,8 +32,6 @@ github.com/spf13/pflag v1.0.5/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3An
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
-github.com/tengteng/go-prompt v1.0.3 h1:S2j5LmdLzAuc3HzbVFd8CaArpwy7Tfv9dEH/7Adn7Hg=
-github.com/tengteng/go-prompt v1.0.3/go.mod h1:PjWH+ltFY/t4cWM+s+VWV3zi8+t2b0XCCy/vrO6+hKk=
 github.com/vikasrao23/go-prompt v0.0.0-20240726210605-328f04df3547 h1:eUCSxjD9KQchuXDzpS3FNr1ZykWXKgMGDtlz6oN2LDg=
 github.com/vikasrao23/go-prompt v0.0.0-20240726210605-328f04df3547/go.mod h1:JMEPktcP14bLs0TU24VYcybF1s8sQ/fMn/XNqscolXk=
 golang.org/x/sys v0.0.0-20190222072716-a9d3bda3a223/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=

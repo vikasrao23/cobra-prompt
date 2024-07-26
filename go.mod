@@ -12,10 +12,7 @@ require (
 	github.com/stretchr/testify v1.7.0
 )
 
-require (
-	github.com/tengteng/go-prompt v1.0.3
-	github.com/vikasrao23/go-prompt v0.0.0-20240726210605-328f04df3547
-)
+require github.com/vikasrao23/go-prompt v0.0.0-20240726210605-328f04df3547
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -23,6 +20,7 @@ require (
 	github.com/mattn/go-isatty v0.0.17 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
+	github.com/tengteng/go-prompt v1.0.3 // indirect
 	golang.org/x/sys v0.6.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

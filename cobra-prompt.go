@@ -95,40 +95,45 @@ func (co CobraPrompt) RunContext(ctx context.Context) {
 	}
 
 	p := prompt.New(
-		Executor, completer,
+		func(input string) {
+			if err := termios.Tcsetattr(uintptr(fd), termios.TCSANOW, (*unix.Termios)(originalTermios)); err != nil {
+				panic(err)
+			}
+			if input == "test" {
+				ctx, cancel := context.WithCancel(context.Background())
+				c := make(chan os.Signal, 1)
+				signal.Notify(c, os.Interrupt)
+
+				go func() {
+					select {
+					case <-c:
+						cancel()
+					}
+				}()
+				go func() {
+					defer cancel()
+					promptArgs := co.parseArgs(input)
+					os.Args = append([]string{os.Args[0]}, promptArgs...)
+					if err := co.RootCmd.ExecuteContext(ctx); err != nil {
+						if co.OnErrorFunc != nil {
+							co.OnErrorFunc(err)
+						} else {
+							co.RootCmd.PrintErrln(err)
+							os.Exit(1)
+						}
+					}
+				}()
+				select {
+				case <-ctx.Done():
+					return
+				}
+			}
+
+		},
+		completer,
 		co.GoPromptOptions...,
 	)
-
 	p.Run()
-}
-
-func Executor(input string) {
-	// restore the original settings to allow ctrl-c to generate signal
-	if err := termios.Tcsetattr(uintptr(fd), termios.TCSANOW, (*unix.Termios)(originalTermios)); err != nil {
-		panic(err)
-	}
-
-	if input == "test" {
-		ctx, cancel := context.WithCancel(context.Background())
-		c := make(chan os.Signal, 1)
-		signal.Notify(c, os.Interrupt)
-
-		go func() {
-			select {
-			case <-c:
-				cancel()
-			}
-		}()
-		go func() {
-			defer cancel()
-			for { // long task
-			}
-		}()
-		select {
-		case <-ctx.Done():
-			return
-		}
-	}
 }
 
 func completer(d prompt.Document) []prompt.Suggest {

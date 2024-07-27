@@ -2,6 +2,7 @@ package cobraprompt
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"os/signal"
 	"regexp"
@@ -103,10 +104,12 @@ func (co CobraPrompt) RunContext(ctx context.Context) {
 			go func() {
 				select {
 				case <-c:
+					fmt.Println("Interrupted")
 					cancel()
 				}
 			}()
 			go func() {
+				fmt.Println("Parsing input", input)
 				defer cancel()
 				promptArgs := co.parseArgs(input)
 				os.Args = append([]string{os.Args[0]}, promptArgs...)
@@ -118,22 +121,21 @@ func (co CobraPrompt) RunContext(ctx context.Context) {
 						os.Exit(1)
 					}
 				}
+				fmt.Println("Done parsing input", input)
 			}()
 			select {
 			case <-ctx.Done():
+				fmt.Println("Context done")
 				return
 			}
 
 		},
-		completer,
+		func(d prompt.Document) []prompt.Suggest {
+			return findSuggestions(&co, &d)
+		},
 		co.GoPromptOptions...,
 	)
 	p.Run()
-}
-
-func completer(d prompt.Document) []prompt.Suggest {
-	s := []prompt.Suggest{}
-	return prompt.FilterHasPrefix(s, d.GetWordBeforeCursor(), true)
 }
 
 func parseArgsWithQuotes(input string) []string {

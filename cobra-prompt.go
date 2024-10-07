@@ -11,8 +11,8 @@ import (
 	"github.com/pkg/term/termios"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
+	"github.com/vikasrao23/go-prompt"
 	"golang.org/x/sys/unix"
-	"github.com/tengteng/go-prompt"
 )
 
 var fd int
